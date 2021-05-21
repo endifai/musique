@@ -4,8 +4,9 @@ import bodyParser from "body-parser"
 import { createConnection } from "typeorm"
 import { authController } from "./controllers/auth"
 import { authentication } from "./middlewares/authentication"
+import { userController } from "./controllers/user"
 
-createConnection().then(async (connection) => {
+createConnection().then(async () => {
     const app = express()
 
     app.use(bodyParser.json())
@@ -18,6 +19,7 @@ createConnection().then(async (connection) => {
     })
 
     app.use('/auth', authController)
+    app.use('/user', authentication, userController)
     
     app.listen(3000, () => console.log('server is listening'))
 }).catch((e) => {

@@ -7,15 +7,13 @@ export const authentication = async (
   next: NextFunction
 ) => {
   const authHeader = req.headers["authorization"];
-  const token = authHeader.split(" ")[1];
+  const token = authHeader?.split(" ")[1];
 
   if (!token) {
     return res.sendStatus(401);
   }
 
   jwt.verify(token, process.env.SECRET, (error: any, userId: any) => {
-    console.log(error);
-
     if (error) {
       return res.sendStatus(403);
     }

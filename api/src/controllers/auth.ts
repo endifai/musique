@@ -1,7 +1,7 @@
 import express from "express";
 import { getRepository } from "typeorm";
 import { body } from "express-validator";
-import bcrypt from 'bcrypt'
+import bcrypt from "bcrypt";
 
 import { User } from "../entity/User";
 import { generateJWTToken } from "../utils/jwt";
@@ -16,26 +16,28 @@ authController.post(
     body("password").isString().isLength({ min: 8 }),
   ]),
   async (req, res) => {
-
     try {
-        const { email, password } = req.body;
+      const { email, password } = req.body;
 
-        const userRepository = getRepository(User);
-        const user = await userRepository.findOne({email})
-  
-        if (!user) {
-          return res.status(400).send({ message: 'Invalid credentials' })
-        }
+      const userRepository = getRepository(User);
+      const user = await userRepository.findOne({ email });
 
-        const isValidPassword = await bcrypt.compare(password, user.password)
+      if (!user) {
+        return res.status(400).send({ message: "Invalid credentials" });
+      }
 
-        if (!isValidPassword) return res.status(400).send({ message: 'Invalid credentials' })
-  
-        const jwt = generateJWTToken(user.id);
-  
-        return res.send({ jwt });
+      const isValidPassword = await bcrypt.compare(password, user.password);
+
+      if (!isValidPassword)
+        return res.status(400).send({ message: "Invalid credentials" });
+
+      const jwt = generateJWTToken(user.id);
+
+      const { password: _, ...formattedUser } = user;
+
+      return res.send({ jwt, user: formattedUser });
     } catch (e) {
-        return res.status(400).send({ message: e.message });
+      return res.status(400).send({ message: e.message });
     }
   }
 );
@@ -57,22 +59,22 @@ authController.post(
       });
 
       if (alreadyExist) {
-        return res.status(400).send({ message: 'User already exists' })
+        return res.status(400).send({ message: "User already exists" });
       }
 
       const user = new User();
 
-      const salt = await bcrypt.genSalt()
+      const salt = await bcrypt.genSalt();
 
       user.email = email;
       user.nickname = nickname;
       user.password = await bcrypt.hash(password, salt);
 
-      const createdUser = await userRepository.save(user);
+      const { password: _, ...createdUser } = await userRepository.save(user);
 
       const jwt = generateJWTToken(createdUser.id);
 
-      return res.send({ jwt });
+      return res.send({ jwt, user: createdUser });
     } catch (e) {
       return res.status(400).send({ message: e.message });
     }
