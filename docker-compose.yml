@@ -1,0 +1,32 @@
+version: "3"
+
+volumes:
+  musique-local-db:
+
+services:
+  db:
+    restart: always
+    image: postgres
+    container_name: db
+    environment:
+      POSTGRES_DB: musique
+      POSTGRES_USER: musique
+      POSTGRES_PASSWORD:  musique
+    ports:
+      - "5432:5432"
+    volumes:
+      - musique-local-db:/var/lib/postgresql/data
+
+  pgweb:
+    restart: always
+    image: sosedoff/pgweb
+    environment:
+      - DATABASE_URL=postgres://musique:musique@db:5432/musique?sslmode=disable
+    links:
+      - db:db
+    ports: 
+      - "8081:8081"
+    depends_on:
+      - db
+
+
