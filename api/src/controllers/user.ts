@@ -1,19 +1,38 @@
-import express from 'express'
-import multer from 'multer'
-import { getRepository } from 'typeorm'
-import { User } from '../entity/User'
+import express from "express";
+import multer from "multer";
+import { getRepository } from "typeorm";
+import path from "path";
 
-const userController = express.Router()
-const upload = multer({dest: 'avatars/'})
+import { User } from "../entity/User";
 
-userController.put('/', upload.single('avatar'), async (req, res) => {
-    const userId = req.userId
+const userController = express.Router();
 
-    const userRepository = getRepository(User)
+const avatarsDir = "avatars";
 
-    const user = userRepository.findOne({id: userId})
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => {
+    cb(null, path.join(avatarsDir));
+  },
+  filename: function (_req, file, cb) {
+    cb(null, new Date().getTime() + path.extname(file.originalname));
+  },
+});
 
-    res.send({ user })
-})
+const upload = multer({
+  storage,
+});
 
-export { userController }
+userController.put("/", upload.single("avatar"), async (req, res) => {
+  const userId = req.userId;
+
+  const userRepository = getRepository(User);
+
+  const { password: _, ...user } = await userRepository.findOne({ id: userId });
+  user.avatarUri = path.join(avatarsDir, req.file.filename);
+
+  userRepository.save(user);
+
+  res.send({ user });
+});
+
+export { userController };
