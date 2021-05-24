@@ -1,7 +1,8 @@
 import { Formik } from 'formik'
-import { noop } from 'lodash'
 import { ReactElement } from 'react'
+import { useHistory } from 'react-router'
 
+import { useStore } from '../../stores/store-context'
 import { SignUpView } from './sign-up.view'
 
 export interface ISignUpValues {
@@ -17,10 +18,19 @@ const initialValues: ISignUpValues = {
 }
 
 export const SignUpForm = (): ReactElement => {
-  const handleSubmit = noop
+  const store = useStore()
+  const history = useHistory()
+
+  const handleSubmitAsync = async (values: ISignUpValues) => {
+    const user = await store?.userStore.signUpAsync(values)
+
+    if (user) {
+      history.push('./')
+    }
+  }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmitAsync}>
       {({ values, setFieldValue }) => (
         <SignUpView values={values} setFieldValue={setFieldValue} />
       )}

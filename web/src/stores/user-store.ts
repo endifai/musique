@@ -1,24 +1,73 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
-interface IUserStore {
-  user?: {
-    id: string
-    email: string
-    nickname: string
-    avatarUri: string
-  }
-}
+import { ISignInValues } from '../auth/ui/sign-in.form'
+import { ISignUpValues } from '../auth/ui/sign-up.form'
+import { IUser } from '../types'
+import { RootStore } from './root-store'
 
-class UserStore implements IUserStore {
-  user = undefined
+export class UserStore {
+  user?: IUser
+  rootStore: RootStore
+  loading = false
 
-  constructor() {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore
     makeAutoObservable(this)
   }
 
-  signIn(values: { email: string; password: string }) {
-    console.log(values)
+  async signInAsync(values: ISignInValues) {
+    try {
+      this.loading = true
+
+      const response = await fetch('http://localhost:5000/auth/sign-in', {
+        body: JSON.stringify(values),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      const { user, jwt } = await response.json()
+
+      if (jwt) {
+        window.localStorage.setItem('token', jwt)
+      }
+
+      runInAction(() => (this.user = user))
+    } catch (error) {
+      console.log(error)
+    }
+
+    this.loading = false
+
+    return this.user
+  }
+
+  async signUpAsync(values: ISignUpValues) {
+    try {
+      this.loading = true
+
+      const response = await fetch('http://localhost:5000/auth/sign-up', {
+        body: JSON.stringify(values),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      const { user, jwt } = await response.json()
+
+      if (jwt) {
+        window.localStorage.setItem('token', jwt)
+      }
+
+      runInAction(() => (this.user = user))
+    } catch (error) {
+      console.log(error)
+    }
+
+    this.loading = false
+
+    return this.user
   }
 }
-
-export default new UserStore()

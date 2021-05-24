@@ -1,7 +1,8 @@
 import { Formik } from 'formik'
 import { ReactElement } from 'react'
+import { useHistory } from 'react-router'
 
-import userStore from '../../stores/user-store'
+import { useStore } from '../../stores/store-context'
 import { SignInView } from './sign-in.view'
 
 export interface ISignInValues {
@@ -15,10 +16,19 @@ const initialValues: ISignInValues = {
 }
 
 export const SignInForm = (): ReactElement => {
-  const handleSubmit = (values: ISignInValues) => userStore.signIn(values)
+  const store = useStore()
+  const history = useHistory()
+
+  const handleSubmitAsync = async (values: ISignInValues) => {
+    const user = await store?.userStore.signInAsync(values)
+
+    if (user) {
+      history.push('/')
+    }
+  }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmitAsync}>
       {({ values, setFieldValue }) => (
         <SignInView values={values} setFieldValue={setFieldValue} />
       )}
