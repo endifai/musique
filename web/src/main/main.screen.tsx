@@ -1,6 +1,8 @@
 import { ReactElement, useEffect } from 'react'
 import { useHistory } from 'react-router'
 
+import { Box } from '../ui/box'
+import { SideBar } from '../ui/sidebar'
 import { Text } from '../ui/text'
 
 export const MainScreen = (): ReactElement => {
@@ -14,5 +16,10 @@ export const MainScreen = (): ReactElement => {
     }
   }, [history])
 
-  return <Text>Main</Text>
+  return (
+    <Box display="flex" height="100%">
+      <SideBar />
+      <Text>Main</Text>
+    </Box>
+  )
 }
