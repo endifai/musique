@@ -70,4 +70,29 @@ export class UserStore {
 
     return this.user
   }
+
+  async getMeAsync() {
+    try {
+      this.loading = true
+
+      const response = await fetch('http://localhost:5000/user/me', {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+        },
+      })
+
+      const { user } = await response.json()
+
+      runInAction(() => (this.user = user))
+    } catch {
+      window.localStorage.removeItem('token')
+    }
+
+    this.loading = false
+  }
+
+  logout() {
+    runInAction(() => (this.user = undefined))
+    window.localStorage.removeItem('token')
+  }
 }

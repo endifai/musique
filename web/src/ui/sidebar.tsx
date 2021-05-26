@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import { useLocation } from 'react-router'
 
 import { SvgAllTracks } from '../icons/all-tracks'
 import { SvgFavorites } from '../icons/favorites'
@@ -6,9 +7,15 @@ import { SvgMyTracks } from '../icons/my-tracks'
 import { SvgSingers } from '../icons/singers'
 import { Box } from './box'
 import { Logo } from './logo'
-import { Text } from './text'
+import { NavItem } from './nav-item'
 
-const routes = [
+export interface INavItem {
+  label: string
+  route: string
+  Icon: ({ fill }: { fill?: string }) => ReactElement
+}
+
+const routes: INavItem[] = [
   {
     label: 'Все треки',
     route: '/',
@@ -32,26 +39,24 @@ const routes = [
 ]
 
 export const SideBar = (): ReactElement => {
+  const { pathname } = useLocation()
+
   return (
-    <Box display="flex" flexDirection="column" flexBasis="300px" p="12px 24px">
+    <Box
+      display="flex"
+      flexDirection="column"
+      flexBasis="300px"
+      p="12px 24px"
+      borderRight="1px solid #d1d1ce">
       <Logo />
 
       <Box mt="34px">
-        {routes.map(({ label, Icon }) => (
-          <Box key={label} display="flex" alignItems="center" mb="12px">
-            <Box
-              width="20px"
-              height="20px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              mr="10px">
-              <Icon />
-            </Box>
-            <Text my={0} lineHeight="20px">
-              {label}
-            </Text>
-          </Box>
+        {routes.map(item => (
+          <NavItem
+            key={item.route}
+            isActive={pathname === item.route}
+            {...item}
+          />
         ))}
       </Box>
     </Box>
