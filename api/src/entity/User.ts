@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Track } from "./Track";
 
 
 @Entity()
@@ -19,4 +20,6 @@ export class User {
         nullable: true
     })
     avatarUri: string
+
+    @OneToMany(type => Track, track => track.user) tracks: Track[]
 }

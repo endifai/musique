@@ -18,6 +18,10 @@ const StyledForm = styled(Form)`
   max-width: 465px;
 `
 
+const StyledButton = styled(Button)`
+  margin: 0 auto;
+`
+
 interface Props {
   values: ISignUpValues
   setFieldValue: (
@@ -63,8 +67,6 @@ export const SignUpView = ({ values, setFieldValue }: Props): ReactElement => (
       <Link to="/sign-in">Войти</Link>
     </Box>
 
-    <Box textAlign="center">
-      <Button text="Зарегистрироваться" type="submit" />
-    </Box>
+    <StyledButton text="Зарегистрироваться" type="submit" />
   </StyledForm>
 )

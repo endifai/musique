@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { theme } from '../theme/theme'
@@ -10,9 +10,9 @@ const StyledButton = styled.button`
   border-radius: 24px;
   font-size: 20px;
   line-height: 24px;
-  font-weight: 600;
   padding: 6px 24px;
   outline: none;
+  display: flex;
 
   :hover {
     cursor: pointer;
@@ -24,11 +24,14 @@ const StyledButton = styled.button`
 interface Props {
   text: string
   type?: 'button' | 'submit' | 'reset'
+  icon?: ReactNode
+  className?: string
   onClick?: () => void
 }
 
-export const Button = ({ text, type, onClick }: Props): ReactElement => (
-  <StyledButton type={type} onClick={onClick}>
+export const Button = ({ text, icon, ...props }: Props): ReactElement => (
+  <StyledButton {...props}>
+    {icon}
     {text}
   </StyledButton>
 )

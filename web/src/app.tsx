@@ -1,16 +1,19 @@
 import React from 'react'
+import { ThemeProvider } from 'styled-components'
 
 import { Routes } from './core/routes'
 import { StoreProvider } from './stores/store-context'
-import { GlobalStyle } from './theme/theme'
+import { AppTheme, GlobalStyle } from './theme/theme'
 
 const App = () => {
   return (
     <React.Fragment>
       <StoreProvider>
-        <GlobalStyle />
+        <ThemeProvider theme={AppTheme}>
+          <GlobalStyle />
 
-        <Routes />
+          <Routes />
+        </ThemeProvider>
       </StoreProvider>
     </React.Fragment>
   )

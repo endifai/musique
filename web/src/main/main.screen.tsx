@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react'
 import { ReactElement, useEffect } from 'react'
-import { useHistory } from 'react-router'
+import { Route, Switch, useHistory } from 'react-router'
 
+import { ProfileScreen } from '../profile/profile.screen'
 import { useStore } from '../stores/store-context'
 import { Box } from '../ui/box'
 import { Header } from '../ui/header'
 import { SideBar } from '../ui/sidebar'
-import { Text } from '../ui/text'
 
 export const MainScreen = observer((): ReactElement => {
   const history = useHistory()
@@ -14,7 +14,7 @@ export const MainScreen = observer((): ReactElement => {
 
   useEffect(() => {
     if (store && !store?.userStore.user && !store?.userStore.loading) {
-      history.push('sign-in')
+      history.push('/sign-in')
     }
   }, [history, store, store?.userStore.loading, store?.userStore.user])
 
@@ -24,7 +24,10 @@ export const MainScreen = observer((): ReactElement => {
 
       <Box display="flex" flex="1" flexDirection="column">
         <Header />
-        <Text>Main</Text>
+
+        <Switch>
+          <Route path="/profile" component={ProfileScreen} />
+        </Switch>
       </Box>
     </Box>
   )

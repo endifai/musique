@@ -71,7 +71,7 @@ export const Text = styled.p<TextProps>`
 
 Text.defaultProps = {
   as: 'p',
-  color: 'black.0',
+  color: 'greys.0',
   wordBreak: 'normal',
   cursor: 'default',
   textDecoration: 'none',

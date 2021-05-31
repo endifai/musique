@@ -28,12 +28,12 @@ const routes: INavItem[] = [
   },
   {
     label: 'Мои треки',
-    route: '/my-tracks',
+    route: '/profile/my-tracks',
     Icon: SvgMyTracks,
   },
   {
     label: 'Любимые треки',
-    route: '/favorites',
+    route: '/profile/favorites',
     Icon: SvgFavorites,
   },
 ]

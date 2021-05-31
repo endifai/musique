@@ -8,6 +8,7 @@ import cors from 'cors'
 import { authController } from "./controllers/auth"
 import { authentication } from "./middlewares/authentication"
 import { userController } from "./controllers/user"
+import { myTracksController } from "./controllers/my-tracks"
 
 createConnection().then(async () => {
     const app = express()
@@ -15,6 +16,7 @@ createConnection().then(async () => {
     app.use(cors())
 
     app.use('/avatars', express.static(path.join(process.cwd(), 'avatars')))
+    app.use('/audio', express.static(path.join(process.cwd(), 'audio')))
 
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({
@@ -25,9 +27,11 @@ createConnection().then(async () => {
         res.send('hey')
     })
 
+    app.use('/my-tracks', authentication, myTracksController)
+    
     app.use('/auth', authController)
     app.use('/user', authentication, userController)
-    
+
     app.listen(5000, () => console.log('server is listening'))
 }).catch((e) => {
     console.log(e)
