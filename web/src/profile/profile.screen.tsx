@@ -32,8 +32,6 @@ export const ProfileScreen = observer((): ReactElement => {
     store?.userStore.getMeAsync()
   }, [store?.userStore])
 
-  console.log(user?.tracks)
-
   const imageUrl = user?.avatarUri
     ? formatResourceUrl(user?.avatarUri)
     : 'https://images.unsplash.com/photo-1598908314941-ddc4ef84509e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'

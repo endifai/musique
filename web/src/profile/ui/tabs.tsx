@@ -1,8 +1,9 @@
 import { ReactElement } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { ifProp } from 'styled-tools'
 
+import { RoutesEnum } from '../../core/routes.enum'
 import { theme } from '../../theme/theme'
 import { Box } from '../../ui/box'
 import { Text } from '../../ui/text'
@@ -31,11 +32,20 @@ const Tab = styled(Text)<{ isActive: boolean }>`
 
 export const Tabs = (): ReactElement => {
   const { pathname } = useLocation()
+  const history = useHistory()
 
   return (
     <Box display="flex">
-      <Tab isActive={false}>Мои треки</Tab>
-      <Tab isActive={true}>Любимые треки</Tab>
+      <Tab
+        isActive={pathname === RoutesEnum.MyTracks}
+        onClick={() => history.push(RoutesEnum.MyTracks)}>
+        Мои треки
+      </Tab>
+      <Tab
+        isActive={pathname === RoutesEnum.Favorites}
+        onClick={() => history.push(RoutesEnum.Favorites)}>
+        Любимые треки
+      </Tab>
     </Box>
   )
 }
