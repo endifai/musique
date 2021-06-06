@@ -1,11 +1,14 @@
 import { observer } from 'mobx-react'
 import { ReactElement, useEffect } from 'react'
+import { Route, Switch } from 'react-router'
 import styled from 'styled-components'
 
 import { formatResourceUrl } from '../core/format-resource-url'
+import { RoutesEnum } from '../core/routes.enum'
 import { useStore } from '../stores/store-context'
 import { Box } from '../ui/box'
 import { Text } from '../ui/text'
+import { MyTracksTable } from './ui/my-tracks.table'
 import { Tabs } from './ui/tabs'
 import { UploadTrack } from './ui/upload-track'
 
@@ -61,15 +64,20 @@ export const ProfileScreen = observer((): ReactElement => {
             </Text>
 
             <Text my={0} fontWeight="300" fontSize="18px" lineHeight="22px">
-              Количество треков: {user?.tracks.length}
+              Количество треков: {user?.tracks?.length}
             </Text>
           </Box>
 
           <UploadTrack />
         </Box>
       </Box>
+
       <Tabs />
-      <Box flex={1} />
+
+      <Switch>
+        <Route path={RoutesEnum.MyTracks} component={MyTracksTable} />
+        <Route path={RoutesEnum.Favorites} />
+      </Switch>
     </Container>
   )
 })

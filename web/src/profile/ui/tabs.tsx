@@ -14,7 +14,7 @@ const Tab = styled(Text)<{ isActive: boolean }>`
   line-height: 18px;
   margin-right: 21px;
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 28px;
 
   ${ifProp(
     'isActive',

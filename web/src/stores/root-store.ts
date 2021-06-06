@@ -7,6 +7,6 @@ export class RootStore {
 
   constructor() {
     this.userStore = new UserStore(this)
-    this.myTracksStore = new MyTracksStore()
+    this.myTracksStore = new MyTracksStore(this)
   }
 }

@@ -1,7 +1,12 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
+
+import { RootStore } from './root-store'
 
 export class MyTracksStore {
-  constructor() {
+  rootStore: RootStore
+
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore
     makeAutoObservable(this)
   }
 
@@ -15,9 +20,9 @@ export class MyTracksStore {
         },
       })
 
-      const json = await response.json()
+      const { track } = await response.json()
 
-      console.log(json)
+      runInAction(() => this.rootStore.userStore.user?.tracks.unshift(track))
     } catch (error) {
       console.log(error.message)
     }
