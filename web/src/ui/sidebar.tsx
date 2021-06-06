@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { useLocation } from 'react-router'
 
+import { RoutesEnum } from '../core/routes.enum'
 import { SvgAllTracks } from '../icons/all-tracks'
 import { SvgFavorites } from '../icons/favorites'
 import { SvgMyTracks } from '../icons/my-tracks'
@@ -18,22 +19,22 @@ export interface INavItem {
 const routes: INavItem[] = [
   {
     label: 'Все треки',
-    route: '/',
+    route: RoutesEnum.Root,
     Icon: SvgAllTracks,
   },
   {
     label: 'Исполнители',
-    route: '/singers',
+    route: RoutesEnum.Singers,
     Icon: SvgSingers,
   },
   {
     label: 'Мои треки',
-    route: '/profile/my-tracks',
+    route: RoutesEnum.MyTracks,
     Icon: SvgMyTracks,
   },
   {
     label: 'Любимые треки',
-    route: '/profile/favorites',
+    route: RoutesEnum.Favorites,
     Icon: SvgFavorites,
   },
 ]

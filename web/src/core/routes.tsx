@@ -5,6 +5,7 @@ import { SignInScreen } from '../auth/sign-in.screen'
 import { SignUpScreen } from '../auth/sign-up.screen'
 import { MainScreen } from '../main/main.screen'
 import { useStore } from '../stores/store-context'
+import { RoutesEnum } from './routes.enum'
 
 export const Routes = (): ReactElement => {
   const store = useStore()
@@ -16,10 +17,10 @@ export const Routes = (): ReactElement => {
   return (
     <Router>
       <Switch>
-        <Route path="/sign-up" component={SignUpScreen} exact />
-        <Route path="/sign-in" component={SignInScreen} exact />
+        <Route path={RoutesEnum.SignUp} component={SignUpScreen} exact />
+        <Route path={RoutesEnum.SignIn} component={SignInScreen} exact />
 
-        <Route path="/" component={MainScreen} />
+        <Route path={RoutesEnum.Root} component={MainScreen} />
       </Switch>
     </Router>
   )

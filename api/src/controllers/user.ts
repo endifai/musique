@@ -40,7 +40,7 @@ userController.get("/me", async (req: Request, res: Response) => {
 
   const userRepository = getRepository(User);
 
-  const { password: _, ...user } = await userRepository.findOne({ id: userId });
+  const { password: _, ...user } = await userRepository.createQueryBuilder('user').leftJoinAndSelect('user.tracks', 'track').where('user.id = :userId', { userId }).getOne()
 
   res.send({ user })
 });
