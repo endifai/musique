@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { useStore } from '../../stores/store-context'
 import { ITrack } from '../../types'
 import { Table } from '../../ui/table'
+import { CellDelete } from './cell-delete'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const StyledTable = styled(Table)`
@@ -38,12 +39,15 @@ export const MyTracksTable = observer((): ReactElement => {
       {
         Header: ' ',
         accessor: () => 'hey',
+        Cell: ({ row }: { row: Row<ITrack> }) => (
+          <CellDelete trackId={row.original.id} />
+        ),
       },
     ],
     [],
   )
 
-  const data = [...(store?.userStore.user?.tracks ?? [])]
+  const data = [...(store?.myTracksStore.myTracks ?? [])]
 
   return <StyledTable data={data} columns={columns} />
 })

@@ -33,7 +33,10 @@ export class UserStore {
         window.localStorage.setItem('token', jwt)
       }
 
-      runInAction(() => (this.user = user))
+      runInAction(() => {
+        this.user = user
+        this.rootStore.myTracksStore.myTracks = [...user.tracks]
+      })
     } catch (error) {
       console.log(error)
     }
@@ -61,7 +64,10 @@ export class UserStore {
         window.localStorage.setItem('token', jwt)
       }
 
-      runInAction(() => (this.user = user))
+      runInAction(() => {
+        this.user = user
+        this.rootStore.myTracksStore.myTracks = [...user.tracks]
+      })
     } catch (error) {
       console.log(error)
     }
@@ -83,7 +89,10 @@ export class UserStore {
 
       const { user } = await response.json()
 
-      runInAction(() => (this.user = user))
+      runInAction(() => {
+        this.user = user
+        this.rootStore.myTracksStore.myTracks = [...user.tracks]
+      })
     } catch {
       window.localStorage.removeItem('token')
     }

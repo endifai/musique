@@ -30,6 +30,7 @@ export const ProfileScreen = observer((): ReactElement => {
   const store = useStore()
 
   const user = store?.userStore.user
+  const myTracks = store?.myTracksStore.myTracks
 
   useEffect(() => {
     store?.userStore.getMeAsync()
@@ -64,7 +65,7 @@ export const ProfileScreen = observer((): ReactElement => {
             </Text>
 
             <Text my={0} fontWeight="300" fontSize="18px" lineHeight="22px">
-              Количество треков: {user?.tracks?.length}
+              Количество треков: {myTracks?.length ?? 0}
             </Text>
           </Box>
 

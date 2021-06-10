@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import multer from 'multer'
 import path from 'path'
+import fs from 'fs/promises'
 import { getRepository } from 'typeorm'
 import { Track } from '../entity/Track'
 import { User } from '../entity/User'
@@ -36,6 +37,28 @@ myTracksController.post('/', upload.single('file'),async (req: Request, res: Res
     const trackInfo = await tracksRepository.save(track)
 
     return res.send({track: trackInfo})
+})
+
+myTracksController.delete('/:id', async (req: Request, res: Response) => {
+  const trackId = req.params.id
+
+  const tracksRepository = getRepository(Track)
+
+  try {
+    const track = await tracksRepository.createQueryBuilder('track').where({id: trackId}).leftJoinAndSelect('track.user', 'user').getOne()
+
+    if (track.user.id !== req.userId) {
+      return res.status(400).send({ message: 'Unauthorized' })
+    }
+  
+    await fs.unlink(path.join(process.cwd(), track.fileUrl))
+  
+    await tracksRepository.remove(track)
+  
+    return res.send({ trackId })
+  } catch {
+    return res.status(400).send({ status: 'error' })
+  }
 })
 
 export { myTracksController }
