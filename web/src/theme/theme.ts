@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     font-family: Montserrat;
     color:  #5F5F57;
+    overflow: hidden;
   }
 `
 

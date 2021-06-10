@@ -17,6 +17,7 @@ const Container = styled(Box)`
   flex-direction: column;
   flex: 1;
   padding: 30px 40px 30px 30px;
+  overflow: auto;
 `
 
 const Avatar = styled.img`
