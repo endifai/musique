@@ -4,6 +4,7 @@ export enum RoutesEnum {
   SignIn = '/sign-in',
   Profile = '/profile',
   Singers = '/singers',
+  Singer = '/singer',
   MyTracks = '/profile/my-tracks',
   Favorites = '/profile/favorites',
 }

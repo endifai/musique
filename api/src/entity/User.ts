@@ -17,7 +17,7 @@ export class User {
     password: string;
     
     @Column({
-        nullable: true
+        default: 'avatars/default_avatar.png'
     })
     avatarUri: string
 

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react'
-import { ReactElement, useEffect } from 'react'
+import { Fragment, ReactElement, useEffect } from 'react'
 import { Route, Switch } from 'react-router'
 import styled from 'styled-components'
 
@@ -11,14 +11,6 @@ import { Text } from '../ui/text'
 import { MyTracksTable } from './ui/my-tracks.table'
 import { Tabs } from './ui/tabs'
 import { UploadTrack } from './ui/upload-track'
-
-const Container = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 30px 40px 30px 30px;
-  overflow: auto;
-`
 
 const Avatar = styled.img`
   object-fit: cover;
@@ -37,12 +29,10 @@ export const ProfileScreen = observer((): ReactElement => {
     store?.userStore.getMeAsync()
   }, [store?.userStore])
 
-  const imageUrl = user?.avatarUri
-    ? formatResourceUrl(user?.avatarUri)
-    : 'https://images.unsplash.com/photo-1598908314941-ddc4ef84509e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+  const imageUrl = user?.avatarUri ? formatResourceUrl(user.avatarUri) : ''
 
   return (
-    <Container>
+    <Fragment>
       <Box display="flex" mb="28px">
         <Avatar src={imageUrl} />
 
@@ -80,6 +70,6 @@ export const ProfileScreen = observer((): ReactElement => {
         <Route path={RoutesEnum.MyTracks} component={MyTracksTable} />
         <Route path={RoutesEnum.Favorites} />
       </Switch>
-    </Container>
+    </Fragment>
   )
 })

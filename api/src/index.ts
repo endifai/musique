@@ -9,6 +9,7 @@ import { authController } from "./controllers/auth"
 import { authentication } from "./middlewares/authentication"
 import { userController } from "./controllers/user"
 import { myTracksController } from "./controllers/my-tracks"
+import { singersController } from "./controllers/singers"
 
 createConnection().then(async () => {
     const app = express()
@@ -28,6 +29,7 @@ createConnection().then(async () => {
     })
 
     app.use('/my-tracks', authentication, myTracksController)
+    app.use('/singers', authentication, singersController)
     
     app.use('/auth', authController)
     app.use('/user', authentication, userController)

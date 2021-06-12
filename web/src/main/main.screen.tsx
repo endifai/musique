@@ -1,13 +1,23 @@
 import { observer } from 'mobx-react'
 import { ReactElement, useEffect } from 'react'
 import { Route, Switch, useHistory } from 'react-router'
+import styled from 'styled-components'
 
 import { RoutesEnum } from '../core/routes.enum'
 import { ProfileScreen } from '../profile/profile.screen'
+import { SingersScreen } from '../singers/singers.screen'
 import { useStore } from '../stores/store-context'
 import { Box } from '../ui/box'
 import { Header } from '../ui/header'
 import { SideBar } from '../ui/sidebar'
+
+const Container = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 30px 40px 30px 30px;
+  overflow: auto;
+`
 
 export const MainScreen = observer((): ReactElement => {
   const history = useHistory()
@@ -26,9 +36,12 @@ export const MainScreen = observer((): ReactElement => {
       <Box display="flex" flex="1" flexDirection="column">
         <Header />
 
-        <Switch>
-          <Route path={RoutesEnum.Profile} component={ProfileScreen} />
-        </Switch>
+        <Container>
+          <Switch>
+            <Route path={RoutesEnum.Singers} component={SingersScreen} />
+            <Route path={RoutesEnum.Profile} component={ProfileScreen} />
+          </Switch>
+        </Container>
       </Box>
     </Box>
   )

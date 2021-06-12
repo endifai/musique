@@ -38,7 +38,6 @@ export const MyTracksTable = observer((): ReactElement => {
       },
       {
         Header: ' ',
-        accessor: () => 'hey',
         Cell: ({ row }: { row: Row<ITrack> }) => (
           <CellDelete trackId={row.original.id} />
         ),

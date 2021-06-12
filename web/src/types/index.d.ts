@@ -3,7 +3,7 @@ export interface IUser {
   email: string
   nickname: string
   avatarUri: string
-  tracks: ITrack[]
+  tracks?: ITrack[]
 }
 
 export interface ITrack {
