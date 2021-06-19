@@ -1,23 +1,17 @@
 import { observer } from 'mobx-react'
 import { Fragment, ReactElement, useEffect } from 'react'
 import { Route, Switch } from 'react-router'
-import styled from 'styled-components'
 
 import { formatResourceUrl } from '../core/format-resource-url'
 import { RoutesEnum } from '../core/routes.enum'
 import { useStore } from '../stores/store-context'
 import { Box } from '../ui/box'
 import { Text } from '../ui/text'
+import { Avatar } from './ui/avatar'
+import { FavoritesTracks } from './ui/favorites-tracks'
 import { MyTracksTable } from './ui/my-tracks.table'
 import { Tabs } from './ui/tabs'
 import { UploadTrack } from './ui/upload-track'
-
-const Avatar = styled.img`
-  object-fit: cover;
-  width: 160px;
-  height: 160px;
-  border-radius: 80px;
-`
 
 export const ProfileScreen = observer((): ReactElement => {
   const store = useStore()
@@ -34,7 +28,7 @@ export const ProfileScreen = observer((): ReactElement => {
   return (
     <Fragment>
       <Box display="flex" mb="28px">
-        <Avatar src={imageUrl} />
+        <Avatar imageUrl={imageUrl} />
 
         <Box
           display="flex"
@@ -68,7 +62,7 @@ export const ProfileScreen = observer((): ReactElement => {
 
       <Switch>
         <Route path={RoutesEnum.MyTracks} component={MyTracksTable} />
-        <Route path={RoutesEnum.Favorites} />
+        <Route path={RoutesEnum.Favorites} component={FavoritesTracks} />
       </Switch>
     </Fragment>
   )

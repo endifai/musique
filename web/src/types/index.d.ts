@@ -12,4 +12,5 @@ export interface ITrack {
   duration: number
   fileUrl: string
   created_at: string
+  isFavorite?: boolean
 }

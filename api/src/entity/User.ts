@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Favorite } from "./Favorite";
 import { Track } from "./Track";
 
 
@@ -22,4 +23,6 @@ export class User {
     avatarUri: string
 
     @OneToMany(type => Track, track => track.user) tracks: Track[]
+
+    @OneToMany(type => Favorite, favorite => favorite.user) favorites: Track[]
 }

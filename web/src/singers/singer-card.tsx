@@ -18,8 +18,8 @@ const Container = styled(Box)`
 `
 
 const StyledImage = styled.img`
-  max-width: 192px;
-  max-height: 192px;
+  width: 192px;
+  height: 192px;
   object-fit: cover;
   border-radius: 6px;
   margin-bottom: 6px;

@@ -10,6 +10,7 @@ import { authentication } from "./middlewares/authentication"
 import { userController } from "./controllers/user"
 import { myTracksController } from "./controllers/my-tracks"
 import { singersController } from "./controllers/singers"
+import { tracksController } from "./controllers/tracks"
 
 createConnection().then(async () => {
     const app = express()
@@ -28,11 +29,15 @@ createConnection().then(async () => {
         res.send('hey')
     })
 
-    app.use('/my-tracks', authentication, myTracksController)
-    app.use('/singers', authentication, singersController)
-    
     app.use('/auth', authController)
-    app.use('/user', authentication, userController)
+
+    app.use(authentication)
+
+    app.use('/my-tracks', myTracksController)
+    app.use('/singers', singersController)
+    app.use('/tracks', tracksController)
+    
+    app.use('/user', userController)
 
     app.listen(5000, () => console.log('server is listening'))
 }).catch((e) => {

@@ -28,7 +28,7 @@ const StyledTable = styled.table`
   tr td:first-child,
   tr th:first-child {
     text-align: center;
-    width: 36px;
+    width: 40px;
   }
 `
 

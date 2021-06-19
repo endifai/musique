@@ -10,6 +10,7 @@ import { useStore } from '../stores/store-context'
 import { Box } from '../ui/box'
 import { Header } from '../ui/header'
 import { SideBar } from '../ui/sidebar'
+import { MainView } from './main.view'
 
 const Container = styled(Box)`
   display: flex;
@@ -40,6 +41,7 @@ export const MainScreen = observer((): ReactElement => {
           <Switch>
             <Route path={RoutesEnum.Singers} component={SingersScreen} />
             <Route path={RoutesEnum.Profile} component={ProfileScreen} />
+            <Route path={RoutesEnum.Root} component={MainView} />
           </Switch>
         </Container>
       </Box>

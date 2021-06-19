@@ -53,17 +53,18 @@ const Container = styled(Box)`
 `
 
 interface Props {
+  accept: string
   onDrop: (acceptedFiles: File[]) => void
 }
 
-export const DropZone = ({ onDrop }: Props): ReactElement => {
+export const DropZone = ({ accept, onDrop }: Props): ReactElement => {
   const {
     getRootProps,
     getInputProps,
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: 'audio/*', onDrop })
+  } = useDropzone({ accept, onDrop })
 
   const { color, Icon, text } = getOptions({
     isDragAccept,

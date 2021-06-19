@@ -100,6 +100,30 @@ export class UserStore {
     this.loading = false
   }
 
+  async uploadAvatarAsync(body: FormData) {
+    try {
+      const response = await fetch('http://localhost:5000/user', {
+        body,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+        },
+      })
+
+      const {
+        user: { avatarUri },
+      } = await response.json()
+
+      runInAction(() => {
+        if (this.user) {
+          this.user.avatarUri = avatarUri
+        }
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   logout() {
     runInAction(() => (this.user = undefined))
     window.localStorage.removeItem('token')

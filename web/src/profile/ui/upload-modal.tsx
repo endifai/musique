@@ -85,7 +85,10 @@ export const UploadModal = ({ isOpen, setIsOpen }: Props): ReactElement => {
               />
             </Box>
 
-            <DropZone onDrop={files => setFieldValue('file', files[0])} />
+            <DropZone
+              accept="audio/*"
+              onDrop={files => setFieldValue('file', files[0])}
+            />
 
             <UploadButton type="submit" />
           </Form>
