@@ -36,13 +36,18 @@ userController.put("/", upload.single("avatar"), async (req, res) => {
 });
 
 userController.get("/me", async (req: Request, res: Response) => {
-  const userId = req.userId
+  const userId = req.userId;
 
   const userRepository = getRepository(User);
 
-  const { password: _, ...user } = await userRepository.createQueryBuilder('user').leftJoinAndSelect('user.tracks', 'track').orderBy('track.created_at', 'DESC').where('user.id = :userId', { userId }).getOne()
+  const { password: _, ...user } = await userRepository
+    .createQueryBuilder("user")
+    .leftJoinAndSelect("user.tracks", "track")
+    .orderBy("track.created_at", "DESC")
+    .where("user.id = :userId", { userId })
+    .getOne();
 
-  res.send({ user })
+  res.send({ user });
 });
 
 export { userController };

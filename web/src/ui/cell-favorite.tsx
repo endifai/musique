@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { SvgFavorite } from '../icons/favorite'
 import { SvgNotFavorite } from '../icons/not-favorite'
 import { useStore } from '../stores/store-context'
+import { ITrack } from '../types'
 import { Box } from './box'
 
 const Container = styled(Box)`
@@ -18,18 +19,25 @@ const Container = styled(Box)`
 `
 
 interface Props {
-  trackId: string
-  isFavorite: boolean
+  track: ITrack
+  onToggleFavorite?: (trackId: string, isFavorite: boolean) => void
 }
 
-export const CellFavorite = ({ trackId, isFavorite }: Props): ReactElement => {
+export const CellFavorite = ({
+  track,
+  onToggleFavorite,
+}: Props): ReactElement => {
   const store = useStore()
 
-  const handleClick = () => store?.tracksStore.toggleFavoriteAsync(trackId)
+  const handleClickAsync = async () => {
+    const isFavorite = await store?.tracksStore.toggleFavoriteAsync(track.id)
+
+    onToggleFavorite?.(track.id, isFavorite)
+  }
 
   return (
-    <Container onClick={handleClick}>
-      {isFavorite ? <SvgFavorite /> : <SvgNotFavorite />}
+    <Container onClick={handleClickAsync}>
+      {track.isFavorite ? <SvgFavorite /> : <SvgNotFavorite />}
     </Container>
   )
 }

@@ -11,6 +11,7 @@ import { userController } from "./controllers/user"
 import { myTracksController } from "./controllers/my-tracks"
 import { singersController } from "./controllers/singers"
 import { tracksController } from "./controllers/tracks"
+import { searchController } from "./controllers/search"
 
 createConnection().then(async () => {
     const app = express()
@@ -36,6 +37,7 @@ createConnection().then(async () => {
     app.use('/my-tracks', myTracksController)
     app.use('/singers', singersController)
     app.use('/tracks', tracksController)
+    app.use('/search', searchController)
     
     app.use('/user', userController)
 

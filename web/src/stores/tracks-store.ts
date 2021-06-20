@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
 import { ITrack, IUser } from '../types'
+import { RootStore } from './root-store'
 
 type TTrack = ITrack & {
   user: IUser
@@ -10,8 +11,10 @@ export class TracksStore {
   tracks: TTrack[] = []
   recentTracks: TTrack[] = []
   loading = false
+  rootStore: RootStore
 
-  constructor() {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore
     makeAutoObservable(this)
   }
 
@@ -101,8 +104,13 @@ export class TracksStore {
           this.recentTracks = this.recentTracks.slice()
         }
 
-        console.log(this.tracks[trackIndex])
+        if (this.rootStore) {
+          this.rootStore.favoritesStore.tracks =
+            this.rootStore.favoritesStore.tracks.filter(item => item.id !== id)
+        }
       })
+
+      return isFavorite
     } catch (error) {
       console.log(error)
     }

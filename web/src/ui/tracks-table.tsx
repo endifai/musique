@@ -17,7 +17,13 @@ const StyledTable = styled(Table)`
   }
 ` as any
 
-export const TracksTable = ({ data }: { data: any[] }): ReactElement => {
+export const TracksTable = ({
+  data,
+  onToggleFavorite,
+}: {
+  data: any[]
+  onToggleFavorite?: (trackId: string, isFavorite: boolean) => void
+}): ReactElement => {
   const columns: Column<any>[] = useMemo(
     () => [
       {
@@ -42,13 +48,13 @@ export const TracksTable = ({ data }: { data: any[] }): ReactElement => {
         Header: ' ',
         Cell: ({ row }: { row: Row<any> }) => (
           <CellFavorite
-            trackId={row.original.id}
-            isFavorite={row.original.isFavorite}
+            track={row.original}
+            onToggleFavorite={onToggleFavorite}
           />
         ),
       },
     ],
-    [],
+    [onToggleFavorite],
   )
 
   return <StyledTable data={data} columns={columns} />

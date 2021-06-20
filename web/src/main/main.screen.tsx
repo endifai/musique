@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { RoutesEnum } from '../core/routes.enum'
 import { ProfileScreen } from '../profile/profile.screen'
+import { SingerScreen } from '../singer/singer.screen'
 import { SingersScreen } from '../singers/singers.screen'
 import { useStore } from '../stores/store-context'
 import { Box } from '../ui/box'
@@ -39,8 +40,9 @@ export const MainScreen = observer((): ReactElement => {
 
         <Container>
           <Switch>
-            <Route path={RoutesEnum.Singers} component={SingersScreen} />
+            <Route exact path={RoutesEnum.Singers} component={SingersScreen} />
             <Route path={RoutesEnum.Profile} component={ProfileScreen} />
+            <Route exact path={RoutesEnum.Singer} component={SingerScreen} />
             <Route path={RoutesEnum.Root} component={MainView} />
           </Switch>
         </Container>

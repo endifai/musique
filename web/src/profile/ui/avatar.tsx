@@ -2,19 +2,13 @@ import { ReactElement, useState } from 'react'
 import styled from 'styled-components'
 
 import { SvgEdit } from '../../icons/edit'
+import { AvatarImage } from '../../ui/avatar-image'
 import { Box } from '../../ui/box'
 import { UploadAvatarModal } from './upload-avatar-modal'
 
 const Container = styled(Box)`
   display: flex;
   position: relative;
-`
-
-const StyledImage = styled.img`
-  object-fit: cover;
-  width: 160px;
-  height: 160px;
-  border-radius: 80px;
 `
 
 const Overlay = styled(Box)`
@@ -48,7 +42,7 @@ export const Avatar = ({ imageUrl }: Props): ReactElement => {
 
   return (
     <Container>
-      <StyledImage src={imageUrl} />
+      <AvatarImage src={imageUrl} />
 
       <Overlay onClick={handleClick}>
         <SvgEdit />

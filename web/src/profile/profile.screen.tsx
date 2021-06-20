@@ -34,6 +34,7 @@ export const ProfileScreen = observer((): ReactElement => {
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
+          alignItems="flex-start"
           ml="30px">
           <Box>
             <Text my={0} fontWeight="300" fontSize="18px" lineHeight="22px">
@@ -50,7 +51,8 @@ export const ProfileScreen = observer((): ReactElement => {
             </Text>
 
             <Text my={0} fontWeight="300" fontSize="18px" lineHeight="22px">
-              Количество треков: {myTracks?.length ?? 0}
+              Количество треков:{' '}
+              <span style={{ fontWeight: 600 }}>{myTracks?.length ?? 0}</span>
             </Text>
           </Box>
 
