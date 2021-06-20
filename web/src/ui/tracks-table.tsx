@@ -2,6 +2,7 @@ import { ReactElement, useMemo } from 'react'
 import { Column, Row } from 'react-table'
 import styled from 'styled-components'
 
+import { formatDuration } from '../core/format-duration'
 import { CellFavorite } from './cell-favorite'
 import { CellSinger } from './cell-singer'
 import { Table } from './table'
@@ -42,7 +43,8 @@ export const TracksTable = ({
       },
       {
         Header: 'Длительность',
-        accessor: 'duration',
+        accessor: ({ duration }: { duration: number }) =>
+          formatDuration(duration),
       },
       {
         Header: ' ',

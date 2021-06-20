@@ -2,6 +2,7 @@ import { Form, Formik, FormikHelpers } from 'formik'
 import { Dispatch, ReactElement, SetStateAction } from 'react'
 import styled from 'styled-components'
 
+import { getAudioDuration } from '../../core/get-audio-duration'
 import { useStore } from '../../stores/store-context'
 import { Box } from '../../ui/box'
 import { Input } from '../../ui/input'
@@ -50,6 +51,10 @@ export const UploadModal = ({ isOpen, setIsOpen }: Props): ReactElement => {
 
     formData.append('title', values.title)
     formData.append('file', values.file)
+
+    const duration = await getAudioDuration(values.file)
+
+    formData.append('duration', String(duration))
 
     await store?.myTracksStore.uploadTrackAsync(formData)
 

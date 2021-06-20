@@ -3,6 +3,7 @@ import { ReactElement, useMemo } from 'react'
 import { Column, Row } from 'react-table'
 import styled from 'styled-components'
 
+import { formatDuration } from '../../core/format-duration'
 import { useStore } from '../../stores/store-context'
 import { ITrack } from '../../types'
 import { Table } from '../../ui/table'
@@ -34,7 +35,8 @@ export const MyTracksTable = observer((): ReactElement => {
       },
       {
         Header: 'Длительность',
-        accessor: 'duration',
+        accessor: ({ duration }: { duration: number }) =>
+          formatDuration(duration),
       },
       {
         Header: ' ',

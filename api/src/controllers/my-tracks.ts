@@ -29,9 +29,11 @@ myTracksController.post('/', upload.single('file'),async (req: Request, res: Res
 
     const track = new Track()
 
-    track.title = req.body.title
+    const { title, duration } = req.body
+
+    track.title = title
     track.fileUrl = path.join(audioFilesDir, req.file.filename)
-    track.duration = 600
+    track.duration = duration
     track.user = await userRepository.findOne(req.userId)
 
     const trackInfo = await tracksRepository.save(track)
