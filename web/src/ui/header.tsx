@@ -1,3 +1,4 @@
+import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import { Fragment, useRef, useState } from 'react'
 import { useHistory } from 'react-router'
@@ -7,10 +8,15 @@ import { formatResourceUrl } from '../core/format-resource-url'
 import { RoutesEnum } from '../core/routes.enum'
 import { useOutsideClick } from '../hooks/use-outside-click'
 import { useStore } from '../stores/store-context'
+import { ITrack, IUser } from '../types'
 import { Box } from './box'
 import { HeaderProfile } from './header-profile'
 import { Search } from './search'
 import { Text } from './text'
+
+type TTrack = ITrack & {
+  user: IUser
+}
 
 const Container = styled(Box)`
   flex-basis: 80px;
@@ -22,6 +28,7 @@ const Container = styled(Box)`
   padding-right: 40px;
   border-bottom: 1px solid #d1d1ce;
   position: relative;
+  z-index: 10;
 `
 
 const StyledImage = styled.img`
@@ -33,22 +40,29 @@ const StyledImage = styled.img`
 `
 
 export const Header = observer(() => {
-  const store = useStore()
+  const { searchStore, playerStore } = useStore()
   const history = useHistory()
   const ref = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
 
   useOutsideClick(ref, () => setIsOpen(false))
 
-  const searchQuery = store?.searchStore.searchQuery ?? ''
+  const searchQuery = searchStore.searchQuery ?? ''
 
-  const searchResults = store?.searchStore.searchResults ?? {
+  const searchResults = searchStore.searchResults ?? {
     tracks: [],
     singers: [],
   }
 
   const handleSingerClick = (id: string) =>
     history.push(`${RoutesEnum.Singer}?id=${id}`)
+
+  const handleTrackClick = (track: TTrack) => {
+    runInAction(() => {
+      playerStore.setQueue([track])
+      playerStore.currentIndex = 0
+    })
+  }
 
   return (
     <Container>
@@ -67,7 +81,7 @@ export const Header = observer(() => {
           width="400px"
           maxHeight="650px"
           overflow="auto"
-          border="1px red solid">
+          boxShadow="1px 7px 14px -1px rgba(0,0,0,0.75)">
           <Text my={0} mb="12px">
             Результаты поиска по &quot;
             <span style={{ fontWeight: 600 }}>{searchQuery}</span>&quot;
@@ -103,7 +117,10 @@ export const Header = observer(() => {
               </Text>
 
               {searchResults.tracks.map(track => (
-                <Box key={track.id} mb="12px">
+                <Box
+                  key={track.id}
+                  mb="12px"
+                  onClick={() => handleTrackClick(track)}>
                   <Text my={0} color="black.0" fontWeight={600}>
                     {track.title}
                   </Text>
