@@ -1,4 +1,4 @@
-import { memo, ReactElement } from 'react'
+import { memo, MouseEvent, ReactElement } from 'react'
 import { useHistory } from 'react-router'
 import styled from 'styled-components'
 
@@ -35,7 +35,11 @@ export const CellSinger = memo(({ user }: Props): ReactElement => {
   const avatarUri = formatResourceUrl(user.avatarUri)
   const history = useHistory()
 
-  const handleClick = () => history.push(`${RoutesEnum.Singer}?id=${user.id}`)
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+
+    history.push(`${RoutesEnum.Singer}?id=${user.id}`)
+  }
 
   return (
     <Container onClick={handleClick}>

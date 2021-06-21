@@ -2,7 +2,7 @@ import React, { ReactNode, useContext } from 'react'
 
 import { RootStore } from './root-store'
 
-const StoreContext = React.createContext<RootStore | null>(null)
+const StoreContext = React.createContext<RootStore>(new RootStore())
 
 interface Props {
   children: ReactNode

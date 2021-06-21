@@ -1,7 +1,9 @@
+import { runInAction } from 'mobx'
 import { ReactElement } from 'react'
 import { Column, useTable } from 'react-table'
 import styled from 'styled-components'
 
+import { useStore } from '../stores/store-context'
 import { theme } from '../theme/theme'
 
 const StyledTable = styled.table`
@@ -32,6 +34,12 @@ const StyledTable = styled.table`
   }
 `
 
+const StyledRow = styled.tr`
+  :hover {
+    cursor: pointer;
+  }
+`
+
 interface Props<T extends { id: string }> {
   columns: Column<T>[]
   data: T[]
@@ -43,6 +51,8 @@ export const Table = <T extends { id: string }>({
   data,
   className,
 }: Props<T>): ReactElement => {
+  const { playerStore } = useStore()
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -67,11 +77,21 @@ export const Table = <T extends { id: string }>({
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
+        {rows.map((row, index) => {
           prepareRow(row)
 
+          const handleClick = () => {
+            runInAction(() => {
+              playerStore.setQueue(data as any)
+              playerStore.currentIndex = index
+            })
+          }
+
           return (
-            <tr {...row.getRowProps()} key={row.getRowProps().key}>
+            <StyledRow
+              {...row.getRowProps()}
+              key={row.getRowProps().key}
+              onClick={handleClick}>
               {row.cells.map(cell => {
                 return (
                   <td {...cell.getCellProps()} key={cell.getCellProps().key}>
@@ -79,7 +99,7 @@ export const Table = <T extends { id: string }>({
                   </td>
                 )
               })}
-            </tr>
+            </StyledRow>
           )
         })}
       </tbody>

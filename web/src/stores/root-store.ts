@@ -1,5 +1,6 @@
 import { FavoritesStore } from './favorites-store'
 import { MyTracksStore } from './my-tracks-store'
+import { PlayerStore } from './player-store'
 import { SearchStore } from './search-store'
 import { SingersStore } from './singers-store'
 import { TracksStore } from './tracks-store'
@@ -12,6 +13,7 @@ export class RootStore {
   tracksStore: TracksStore
   favoritesStore: FavoritesStore
   searchStore: SearchStore
+  playerStore: PlayerStore
 
   constructor() {
     this.userStore = new UserStore(this)
@@ -20,5 +22,6 @@ export class RootStore {
     this.tracksStore = new TracksStore(this)
     this.favoritesStore = new FavoritesStore()
     this.searchStore = new SearchStore()
+    this.playerStore = new PlayerStore()
   }
 }

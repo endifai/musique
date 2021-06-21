@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { MouseEvent, ReactElement } from 'react'
 import styled from 'styled-components'
 
 import { SvgFavorite } from '../icons/favorite'
@@ -29,7 +29,9 @@ export const CellFavorite = ({
 }: Props): ReactElement => {
   const store = useStore()
 
-  const handleClickAsync = async () => {
+  const handleClickAsync = async (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+
     const isFavorite = await store?.tracksStore.toggleFavoriteAsync(track.id)
 
     onToggleFavorite?.(track.id, isFavorite)

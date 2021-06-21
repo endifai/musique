@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { formatDuration } from '../../core/format-duration'
 import { useStore } from '../../stores/store-context'
 import { ITrack } from '../../types'
+import { CellPlay } from '../../ui/cell-play'
 import { Table } from '../../ui/table'
 import { CellDelete } from './cell-delete'
 
@@ -23,11 +24,16 @@ const StyledTable = styled(Table)`
 export const MyTracksTable = observer((): ReactElement => {
   const store = useStore()
 
+  const myTracks = store.myTracksStore.myTracks
+  const user = store.userStore.user
+
   const columns: Column<ITrack>[] = useMemo(
     () => [
       {
         Header: '#',
-        Cell: ({ row }: { row: Row<ITrack> }) => row.index + 1,
+        Cell: ({ row }: { row: Row<any> }) => (
+          <CellPlay index={row.index} id={row.original.id} />
+        ),
       },
       {
         Header: 'Название',
@@ -48,7 +54,7 @@ export const MyTracksTable = observer((): ReactElement => {
     [],
   )
 
-  const data = [...(store?.myTracksStore.myTracks ?? [])]
+  const data = myTracks.map(track => ({ ...track, user }))
 
   return <StyledTable data={data} columns={columns} />
 })

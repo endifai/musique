@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { formatDuration } from '../core/format-duration'
 import { CellFavorite } from './cell-favorite'
+import { CellPlay } from './cell-play'
 import { CellSinger } from './cell-singer'
 import { Table } from './table'
 
@@ -29,7 +30,9 @@ export const TracksTable = ({
     () => [
       {
         Header: '#',
-        Cell: ({ row }: { row: Row<any> }) => row.index + 1,
+        Cell: ({ row }: { row: Row<any> }) => (
+          <CellPlay index={row.index} id={row.original.id} />
+        ),
       },
       {
         Header: 'Название',

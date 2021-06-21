@@ -1,5 +1,8 @@
+import { runInAction } from 'mobx'
+
 import { formatResourceUrl } from '../../core/format-resource-url'
 import { SvgPlay } from '../../icons/play'
+import { useStore } from '../../stores/store-context'
 import { IUser } from '../../types'
 import { AvatarImage } from '../../ui/avatar-image'
 import { Box } from '../../ui/box'
@@ -11,7 +14,17 @@ interface Props {
 }
 
 export const SingerHeader = ({ user }: Props) => {
+  const { playerStore } = useStore()
   const imageUrl = user?.avatarUri ? formatResourceUrl(user.avatarUri) : ''
+
+  const handleClick = () => {
+    runInAction(() => {
+      playerStore.setQueue(
+        user.tracks?.map(track => ({ ...track, user })) ?? [],
+      )
+      playerStore.currentIndex = 0
+    })
+  }
 
   return (
     <Box display="flex" mb="28px">
@@ -50,6 +63,7 @@ export const SingerHeader = ({ user }: Props) => {
               <SvgPlay />
             </Box>
           }
+          onClick={handleClick}
         />
       </Box>
     </Box>

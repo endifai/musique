@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react'
-import { Fragment, ReactElement, useEffect, useState } from 'react'
+import { Fragment, ReactElement, useState } from 'react'
 
 import { useStore } from '../stores/store-context'
 import { Title } from '../ui/title'
@@ -15,11 +15,6 @@ export const MainView = observer((): ReactElement => {
     activeTab === 'ALL'
       ? store?.tracksStore.tracks ?? []
       : store?.tracksStore.recentTracks ?? []
-
-  useEffect(() => {
-    store?.tracksStore.getTracksAsync()
-    store?.tracksStore.getRecentTracksAsync()
-  }, [store?.tracksStore])
 
   return (
     <Fragment>
