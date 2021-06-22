@@ -1,5 +1,6 @@
 import { Fragment, useCallback, useEffect, useState } from 'react'
 
+import { API_URL } from '../core/constants'
 import { useQuery } from '../hooks/use-query'
 import { IUser } from '../types'
 import { TracksTable } from '../ui/tracks-table'
@@ -17,7 +18,7 @@ export const SingerScreen = () => {
       try {
         setLoading(true)
 
-        const response = await fetch(`http://localhost:5000/singers/${id}`, {
+        const response = await fetch(`${API_URL}/singers/${id}`, {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem('token')}`,
           },

@@ -1,3 +1,4 @@
+import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
@@ -30,16 +31,24 @@ const Nickname = styled(Text)`
 `
 
 export const HeaderProfile = observer((): ReactElement => {
-  const store = useStore()
+  const { userStore, playerStore } = useStore()
   const history = useHistory()
 
-  const avatarUrl = store?.userStore.user?.avatarUri
+  const avatarUrl = userStore.user?.avatarUri
 
   const imageSrc = avatarUrl
     ? formatResourceUrl(avatarUrl)
     : 'https://images.unsplash.com/photo-1598908314941-ddc4ef84509e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
 
-  const handleLogout = () => store?.userStore.logout()
+  const handleLogout = () => {
+    runInAction(() => {
+      playerStore.pause()
+      playerStore.setQueue([])
+      playerStore.currentIndex = 0
+    })
+
+    userStore.logout()
+  }
 
   const handleClick = () => history.push('/profile/my-tracks')
 
@@ -48,7 +57,7 @@ export const HeaderProfile = observer((): ReactElement => {
       <Avatar src={imageSrc} />
 
       <Nickname my={0} onClick={handleClick}>
-        {store?.userStore.user?.nickname}
+        {userStore.user?.nickname}
       </Nickname>
 
       <Box onClick={handleLogout}>

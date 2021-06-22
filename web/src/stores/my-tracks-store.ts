@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
+import { API_URL } from '../core/constants'
 import { ITrack } from '../types'
 import { RootStore } from './root-store'
 
@@ -14,7 +15,7 @@ export class MyTracksStore {
 
   async uploadTrackAsync(body: FormData) {
     try {
-      const response = await fetch('http://localhost:5000/my-tracks', {
+      const response = await fetch(`${API_URL}/my-tracks`, {
         body,
         method: 'POST',
         headers: {
@@ -31,7 +32,7 @@ export class MyTracksStore {
   }
 
   async deleteTrackAsync(id: string) {
-    const uri = `http://localhost:5000/my-tracks/${id}`
+    const uri = `${API_URL}/my-tracks/${id}`
 
     try {
       const response = await fetch(uri, {

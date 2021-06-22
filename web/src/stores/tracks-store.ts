@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
+import { API_URL } from '../core/constants'
 import { ITrack, IUser } from '../types'
 import { RootStore } from './root-store'
 
@@ -22,7 +23,7 @@ export class TracksStore {
     try {
       this.loading = true
 
-      const response = await fetch('http://localhost:5000/tracks', {
+      const response = await fetch(`${API_URL}/tracks`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem('token')}`,
         },
@@ -48,7 +49,7 @@ export class TracksStore {
     try {
       this.loading = true
 
-      const response = await fetch('http://localhost:5000/tracks/recent', {
+      const response = await fetch(`${API_URL}/tracks/recent`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem('token')}`,
         },
@@ -72,7 +73,7 @@ export class TracksStore {
 
   async toggleFavoriteAsync(trackId: string) {
     try {
-      const response = await fetch('http://localhost:5000/tracks/favorite', {
+      const response = await fetch(`${API_URL}/tracks/favorite`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem('token')}`,

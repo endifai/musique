@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
+import { API_URL } from '../core/constants'
 import { ITrack, IUser } from '../types'
 
 type TTrack = ITrack & {
@@ -25,7 +26,7 @@ export class SearchStore {
       this.loading = true
 
       const response = await fetch(
-        `http://localhost:5000/search?searchQuery=${this.searchQuery}`,
+        `${API_URL}/search?searchQuery=${this.searchQuery}`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem('token')}`,

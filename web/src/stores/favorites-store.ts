@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
+import { API_URL } from '../core/constants'
 import { ITrack, IUser } from '../types'
 
 type TTrack = ITrack & {
@@ -18,7 +19,7 @@ export class FavoritesStore {
     try {
       this.loading = true
 
-      const response = await fetch('http://localhost:5000/tracks/favorites', {
+      const response = await fetch(`${API_URL}/tracks/favorites`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem('token')}`,
         },

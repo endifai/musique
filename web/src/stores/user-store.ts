@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from 'mobx'
 
 import { ISignInValues } from '../auth/ui/sign-in.form'
 import { ISignUpValues } from '../auth/ui/sign-up.form'
+import { API_URL } from '../core/constants'
 import { IUser } from '../types'
 import { RootStore } from './root-store'
 
@@ -19,7 +20,7 @@ export class UserStore {
     try {
       this.loading = true
 
-      const response = await fetch('http://localhost:5000/auth/sign-in', {
+      const response = await fetch(`${API_URL}/auth/sign-in`, {
         body: JSON.stringify(values),
         method: 'POST',
         headers: {
@@ -50,7 +51,7 @@ export class UserStore {
     try {
       this.loading = true
 
-      const response = await fetch('http://localhost:5000/auth/sign-up', {
+      const response = await fetch(`${API_URL}/auth/sign-up`, {
         body: JSON.stringify(values),
         method: 'POST',
         headers: {
@@ -81,7 +82,7 @@ export class UserStore {
     try {
       this.loading = true
 
-      const response = await fetch('http://localhost:5000/user/me', {
+      const response = await fetch(`${API_URL}/user/me`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem('token')}`,
         },
@@ -102,7 +103,7 @@ export class UserStore {
 
   async uploadAvatarAsync(body: FormData) {
     try {
-      const response = await fetch('http://localhost:5000/user', {
+      const response = await fetch(`${API_URL}/user`, {
         body,
         method: 'PUT',
         headers: {
