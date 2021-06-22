@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Fragment, useCallback, useEffect, useState } from 'react'
 
 import { API_URL } from '../core/constants'

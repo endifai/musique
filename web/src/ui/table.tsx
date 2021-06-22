@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { runInAction } from 'mobx'
 import { ReactElement } from 'react'
 import { Column, useTable } from 'react-table'

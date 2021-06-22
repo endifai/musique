@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { makeAutoObservable, runInAction } from 'mobx'
 
 import { ISignInValues } from '../auth/ui/sign-in.form'

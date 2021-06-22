@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactElement, useMemo } from 'react'
 import { Column, Row } from 'react-table'
 import styled from 'styled-components'
