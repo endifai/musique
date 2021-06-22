@@ -34,7 +34,7 @@ myTracksController.post('/', upload.single('file'),async (req: Request, res: Res
     track.title = title
     track.fileUrl = path.join(audioFilesDir, req.file.filename)
     track.duration = duration
-    track.user = await userRepository.findOne(req.userId)
+    track.user = await userRepository.findOne(req['userId'])
 
     const trackInfo = await tracksRepository.save(track)
 
@@ -49,7 +49,7 @@ myTracksController.delete('/:id', async (req: Request, res: Response) => {
   try {
     const track = await tracksRepository.createQueryBuilder('track').where({id: trackId}).leftJoinAndSelect('track.user', 'user').getOne()
 
-    if (track.user.id !== req.userId) {
+    if (track.user.id !== req['userId']) {
       return res.status(400).send({ message: 'Unauthorized' })
     }
   

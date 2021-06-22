@@ -6,7 +6,7 @@ const singersController = express.Router();
 
 singersController.get("/", async (req, res) => {
   const userRepository = getRepository(User);
-  const userId = req.userId;
+  const userId = req['userId'];
 
   const singers = await userRepository
     .createQueryBuilder("user")
@@ -18,7 +18,7 @@ singersController.get("/", async (req, res) => {
 });
 
 singersController.get("/:id", async (req: Request, res: Response) => {
-  const userId = req.userId;
+  const userId = req['userId'];
   const id = req.params.id;
   const userRepository = getRepository(User);
 
@@ -45,7 +45,7 @@ singersController.get("/:id", async (req: Request, res: Response) => {
         avatarUri: user.avatarUri,
         nickname: user.nickname
     }
-  }));
+  })) as any;
 
   res.send({ user });
 });

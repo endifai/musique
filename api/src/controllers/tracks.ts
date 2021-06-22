@@ -9,7 +9,7 @@ const tracksController = express.Router();
 tracksController.get("/", async (req: Request, res: Response) => {
   const tracksRepository = getRepository(Track);
 
-  const userId = req.userId;
+  const userId = req['userId'];
 
   const tracks = await tracksRepository
     .createQueryBuilder("track")
@@ -47,7 +47,7 @@ tracksController.get("/", async (req: Request, res: Response) => {
 tracksController.get("/recent", async (req: Request, res: Response) => {
   const tracksRepository = getRepository(Track);
 
-  const userId = req.userId;
+  const userId = req['userId'];
 
   const tracks = await tracksRepository
     .createQueryBuilder("track")
@@ -85,7 +85,7 @@ tracksController.get("/recent", async (req: Request, res: Response) => {
 tracksController.get("/favorites", async (req: Request, res: Response) => {
   const trackRepository = getRepository(Track);
 
-  const userId = req.userId;
+  const userId = req['userId'];
 
   const tracks = await trackRepository
     .createQueryBuilder("track")
@@ -123,7 +123,7 @@ tracksController.post("/favorite", async (req: Request, res: Response) => {
   const trackRepository = getRepository(Track);
 
   const { trackId } = req.body;
-  const userId = req.userId;
+  const userId = req['userId'];
 
   const favoriteEntity = await favoritesRepository.findOne(undefined, {
     where: {

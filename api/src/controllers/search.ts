@@ -7,7 +7,7 @@ const searchController = express.Router();
 
 searchController.get("/", async (req: Request, res: Response) => {
   const searchQuery = req.query.searchQuery;
-  const userId = req.userId;
+  const userId = req['userId'];
 
   const tracksRepository = getRepository(Track);
   const userRepository = getRepository(User);

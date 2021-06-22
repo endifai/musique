@@ -23,7 +23,7 @@ const upload = multer({
 });
 
 userController.put("/", upload.single("avatar"), async (req, res) => {
-  const userId = req.userId;
+  const userId = req['userId'];
 
   const userRepository = getRepository(User);
 
@@ -36,7 +36,7 @@ userController.put("/", upload.single("avatar"), async (req, res) => {
 });
 
 userController.get("/me", async (req: Request, res: Response) => {
-  const userId = req.userId;
+  const userId = req['userId'];
 
   const userRepository = getRepository(User);
 

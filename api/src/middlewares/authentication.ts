@@ -18,7 +18,7 @@ export const authentication = async (
       return res.sendStatus(403);
     }
 
-    req.userId = userId;
+    req['userId'] = userId;
 
     next();
   });
