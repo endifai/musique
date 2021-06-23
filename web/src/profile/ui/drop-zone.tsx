@@ -11,11 +11,13 @@ import { Text } from '../../ui/text'
 const getOptions = ({
   isDragAccept,
   isDragReject,
+  acceptedFiles,
 }: {
   isDragAccept: boolean
   isDragReject: boolean
+  acceptedFiles: File[]
 }) => {
-  if (isDragAccept) {
+  if (isDragAccept || acceptedFiles[0]) {
     return {
       color: '#168930',
       text: 'Файл успешно загружен',
@@ -61,6 +63,7 @@ export const DropZone = ({ accept, onDrop }: Props): ReactElement => {
   const {
     getRootProps,
     getInputProps,
+    acceptedFiles,
     isDragActive,
     isDragAccept,
     isDragReject,
@@ -69,6 +72,7 @@ export const DropZone = ({ accept, onDrop }: Props): ReactElement => {
   const { color, Icon, text } = getOptions({
     isDragAccept,
     isDragReject,
+    acceptedFiles,
   })
 
   return (

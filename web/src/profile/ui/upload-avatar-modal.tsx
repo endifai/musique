@@ -54,7 +54,7 @@ export const UploadAvatarModal = ({
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              maxWidth: '600px',
+              width: '600px',
             }}>
             <DropZone
               accept="image/*"

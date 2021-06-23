@@ -71,7 +71,7 @@ export const UploadModal = ({ isOpen, setIsOpen }: Props): ReactElement => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              maxWidth: '600px',
+              width: '600px',
             }}>
             <Title color="black.0">Добавление трека</Title>
 
