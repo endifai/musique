@@ -44,7 +44,7 @@ export const MainScreen = observer((): ReactElement => {
   }, [store, store?.tracksStore.tracks])
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column" height="100%">
       <Box height="calc(100vh - 80px)" display="flex" flex={1}>
         <SideBar />
 
